@@ -4,8 +4,9 @@
   "description": "Simple MQTT Client (no auth, decode base64, ...)",
   "main": "dist/simple-mqtt-client.js",
   "scripts": {
-    "lint": "npx eslint ./src --ext .js,.jsx,.ts,.tsx",
-    "build": "tsc --sourceMap",
+    "lint": "npx eslint ./src --ext .js,.jsx,.ts,.tsx --fix",
+    "build": "tsc --sourceMap && cp ./src/simple-mqtt-client ./dist && chmod +x ./dist/simple-mqtt-client",
+    "build:watch": "cp ./src/simple-mqtt-client ./dist && chmod +x ./dist/simple-mqtt-client && tsc-watch --onSuccess \"./dist/simple-mqtt-client\" --sourceMap",
     "dev": "tsc-watch --onSuccess \"node ./dist/simple-mqtt-client.js\" --sourceMap",
     "prod": "node ./dist/simple-mqtt-client.js"
   },
@@ -26,12 +27,22 @@
     "url": "https://github.com/gpfister/simple-mqtt-client/issues"
   },
   "homepage": "https://github.com/gpfister/simple-mqtt-client#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "log4js": "^6.3.0",
+    "mqtt": "^4.2.8",
+    "uuid": "^8.3.2",
+    "yargs": "^17.0.1"
+  },
   "devDependencies": {
     "@types/node": "^16.0.0",
+    "@types/uuid": "^8.3.1",
+    "@types/yargs": "^17.0.1",
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/parser": "^4.28.1",
+    "eslint": "^7.30.0",
+    "eslint-config-google": "^0.14.0",
     "tsc-watch": "^4.4.0",
     "typescript": "^4.3.5"
-  },
-  "dependencies": {
-    "mqtt": "^4.2.8"
   }
 }
