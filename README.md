@@ -1,6 +1,6 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-# Simple MQTT Client
+# gp-mqtt-client
 
 A simple console base MQTT client for development purpose.
 
@@ -10,14 +10,24 @@ This simple console base MQTT client is for my personal development requirement.
 It allows me to:
 
 - monitor topics
-- push message to a Google PubSub Firebase emulator
 
-# Usage
+## Install
+
+_NB: This is not yet published on npm_
+
+```
+git clone https://github.com/gpfister/gp-mqtt-client.git
+cd gp-mqtt-client
+npm ci
+sudo npm -g install $(npm pack . | tail -1)
+```
+
+## Usage
 
 It uses `yargs` with a command approach:
 
 ```
-$ ./dist/simple-mqtt-client --help
+$ ./bin/gp-mqtt-client --help
 
 simple-mqtt-client [command]
 
@@ -80,7 +90,7 @@ Then, build the source code:
 npm run build
 ```
 
-When successfully built, simply run `./dist/simple-mqtt-client --help`.
+When successfully built, simply run `npm run help` or `./bin/gp-mqtt-client --help`.
 
 ## Examples
 
@@ -92,11 +102,10 @@ the provided
 [emulators](https://firebase.google.com/docs/emulator-suite?authuser=0).
 
 - Monitor device config (QoS = 1): `simple-mqtt-client listen "/devices/deviceId/config" -q 1`
-- Monitor device telemetry (QoS = 1) and push to a PubSub topic: `simple-mqtt-client listen "/devices/deviceId/telemetry" -q 1 -p localhost:16004/telemetry`
 
 ## Contributions
 
-See instructions [here](./CONTRIBUTIONS.md).
+See instructions [here](./CONTRIBUTING.md).
 
 ## License
 

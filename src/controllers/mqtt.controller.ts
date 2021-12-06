@@ -5,18 +5,26 @@
  * @since 0.1.0
  * @license MIT
  * @copyright (C) 2021, Greg PFISTER. MIT License
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 
-import {Logger} from 'log4js';
-import {connect as mqttConnect, MqttClient} from 'mqtt';
-import {v4 as uuid} from 'uuid';
+import { Logger } from 'log4js';
+import { connect as mqttConnect, MqttClient } from 'mqtt';
+import { v4 as uuid } from 'uuid';
 
-import {SMCTopic} from '../models/topic.model';
+import { GPTopic } from '../models';
 
 /**
  *
  */
-export class SMCMqttController {
+export class GPMqttController {
   private _logger: Logger;
   private _client?: MqttClient;
   private _hostname: string;
@@ -25,7 +33,7 @@ export class SMCMqttController {
   private _deviceId: string;
   private _autoConnect: boolean;
 
-  private _topics: SMCTopic[] = [];
+  private _topics: GPTopic[] = [];
 
   /**
    *  Build a MQTT Controller that will connect to an MQTT server via TCP
@@ -48,9 +56,9 @@ export class SMCMqttController {
   /**
    * Get the list of topics this contoller is/will be subscribed to
    *
-   * @return {SMCTopic[]} The topic list
+   * @return {GPTopic[]} The topic list
    */
-  getTopics(): SMCTopic[] {
+  getTopics(): GPTopic[] {
     return [...this._topics];
   }
 
@@ -59,7 +67,7 @@ export class SMCMqttController {
    */
   connect() {
     const mqttClientId = `${this._deviceId}`;
-    this._logger.debug(`Connecting to ${this._hostname}:${this._port} with client id ${mqttClientId}`);
+    this._logger.debug(`[MQTT Controller] Connecting to ${this._hostname}:${this._port} with client id ${mqttClientId}`);
 
     // Create a client, and connect to the Google MQTT bridge.
     this._client = mqttConnect({
@@ -73,47 +81,47 @@ export class SMCMqttController {
       clean: true,
       reconnectPeriod: 20000,
       connectTimeout: 30 * 1000,
-      rejectUnauthorized: false,
+      rejectUnauthorized: false
     });
 
     // On successful connection
     this._client.on('connect', (packet) => {
-      this._logger.info(`MQTT Controller: Connected to ${this._hostname}:${this._port} with client id ${mqttClientId}`);
+      this._logger.info(`[MQTT Controller] Connected to ${this._hostname}:${this._port} with client id ${mqttClientId}`);
 
       // Attach all boundDevices
       this._topics.forEach((topic) => {
         if (this._client) {
-          this._client.subscribe(topic.name, {qos: topic.qos});
-          this._logger.info(`MQTT Controller: Subscribed to ${topic.name}`);
+          this._client.subscribe(topic.name, { qos: topic.qos });
+          this._logger.info(`[MQTT Controller] Subscribed to ${topic.name}`);
         }
       });
     });
 
     // On errors
     this._client.on('error', (error) => {
-      this._logger.error(`MQTT Controller: Error ${error.name}: ${error.message}`);
+      this._logger.error(`[MQTT Controller] Error ${error.name}: ${error.message}`);
     });
 
     // On disconnected
     this._client.on('close', () => {
-      this._logger.warn(`MQTT Controller: Disconnected from ${this._hostname}:${this._port}`);
+      this._logger.warn(`[MQTT Controller] Disconnected from ${this._hostname}:${this._port}`);
 
       if (this._client) {
         this._client.end();
       }
 
       if (this._autoConnect) {
-        this._logger.warn(`MQTT Controller: Reconnecting to ${this._hostname}:${this._port} in 1 minute...`);
+        this._logger.warn(`[MQTT Controller] Reconnecting to ${this._hostname}:${this._port} in 1 minute...`);
         setTimeout(() => this.connect(), 60 * 1000);
       }
     });
 
     // On disconnected
     this._client.on('disconnect', (_) => {
-      this._logger.warn(`MQTT Controller: Disconnected from ${this._hostname}:${this._port}`);
+      this._logger.warn(`[MQTT Controller] Disconnected from ${this._hostname}:${this._port}`);
 
       if (this._autoConnect) {
-        this._logger.warn(`MQTT Controller: Reconnecting to ${this._hostname}:${this._port} in 1 minute...`);
+        this._logger.warn(`[MQTT Controller] Reconnecting to ${this._hostname}:${this._port} in 1 minute...`);
         setTimeout(() => this.connect(), 60 * 1000);
       }
     });
@@ -121,27 +129,36 @@ export class SMCMqttController {
     // Handle incomming messages
     this._client.on('message', (topic, message) => {
       const decodedMessage = JSON.parse(Buffer.from(message.toString(), 'base64').toString('binary'));
-      this._logger.info(`MQTT Controller: message received on topic ${topic}`);
-      this._logger.info(`MQTT Controller: Message received:`);
-      console.log(`${ message }`);
-      this._logger.info(`MQTT Controller: Message decoded`);
-      console.log(`${ JSON.stringify(decodedMessage) }`);
+      this._logger.info(`[MQTT Controller] message received on topic ${topic}`);
+      this._logger.info('[MQTT Controller] Message received:');
+      let i = 0;
+      while (i < message.toString().length) {
+        const r = message.toString().length - i;
+        if (r > 80) {
+          console.log(`  ${message.toString().substring(i, i + 80)}`);
+          i += 80;
+        } else {
+          console.log(`  ${message.toString().substring(i, message.toString().length)}`);
+          i = message.toString().length;
+        }
+      }
+      // console.log(`${message}`);
+      this._logger.info('[MQTT Controller] Message decoded:');
+      console.log(`${JSON.stringify(decodedMessage, null, 2)}`);
     });
   }
 
   /**
    * Subscribe to a topic
    *
-   * @param {SMCTopic} topic The topic to subscribe too
+   * @param {GPTopic} topic The topic to subscribe too
    */
-  subscribeTopic(topic: SMCTopic) {
-    if (this._topics.findIndex((aTopic) => {
-      topic.name === aTopic.name;
-    }) < 0) {
+  subscribeTopic(topic: GPTopic) {
+    if (this._topics.findIndex((aTopic) => topic.name === aTopic.name) < 0) {
       this._topics = [...this._topics, topic];
       if (this._client && this._client.connected) {
-        this._client.subscribe(topic.name, {qos: topic.qos});
-        this._logger.info(`MQTT Controller: Subscribed to ${topic.name}`);
+        this._client.subscribe(topic.name, { qos: topic.qos });
+        this._logger.info(`[MQTT Controller] Subscribed to ${topic.name}`);
       }
     }
   }
@@ -149,18 +166,14 @@ export class SMCMqttController {
   /**
    * Subscribe to a topic
    *
-   * @param {SMCTopic} topic The topic to subscribe too
+   * @param {GPTopic} topic The topic to subscribe too
    */
-  unsubscribeTopic(topic: SMCTopic) {
-    if (this._topics.findIndex((aTopic) => {
-      topic.name === aTopic.name;
-    }) > 0) {
-      this._topics = [...this._topics.filter((aTopic) => {
-        topic.name === aTopic.name;
-      })];
+  unsubscribeTopic(topic: GPTopic) {
+    if (this._topics.findIndex((aTopic) => topic.name === aTopic.name) > 0) {
+      this._topics = [...this._topics.filter((aTopic) => topic.name === aTopic.name)];
       if (this._client && this._client.connected) {
         this._client.unsubscribe(topic.name);
-        this._logger.info(`MQTT Controller: Unsubscribed from ${topic.name}`);
+        this._logger.info(`[MQTT Controller] Unsubscribed from ${topic.name}`);
       }
     }
   }

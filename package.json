@@ -1,18 +1,18 @@
 {
-  "name": "simple-mqtt-client",
+  "name": "gp-mqtt-client",
   "version": "0.2.0",
   "description": "Simple MQTT Client (no auth, decode base64, ...)",
-  "main": "dist/simple-mqtt-client.js",
+  "main": "dist/gp-mqtt-client.js",
+  "bin": {
+    "gp-mqtt-client": "bin/gp-mqtt-client"
+  },
   "scripts": {
     "lint": "npx eslint ./src --ext .js,.jsx,.ts,.tsx --fix",
-    "build": "tsc --sourceMap && cp ./src/simple-mqtt-client ./dist && chmod +x ./dist/simple-mqtt-client",
-    "build:watch": "cp ./src/simple-mqtt-client ./dist && chmod +x ./dist/simple-mqtt-client && tsc-watch --onSuccess \"./dist/simple-mqtt-client\" --sourceMap",
-    "dev": "tsc-watch --onSuccess \"node ./dist/simple-mqtt-client.js\" --sourceMap",
-    "prod": "node ./dist/simple-mqtt-client.js"
+    "build": "tsc --sourceMap"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/gpfister/simple-mqtt-client.git"
+    "url": "git+ssh://git@github.com/gpfister/gp-mqtt-client.git"
   },
   "keywords": [
     "MQTT",
@@ -24,9 +24,9 @@
   "author": "Greg PFISTER",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gpfister/simple-mqtt-client/issues"
+    "url": "https://github.com/gpfister/gp-mqtt-client/issues"
   },
-  "homepage": "https://github.com/gpfister/simple-mqtt-client#readme",
+  "homepage": "https://github.com/gpfister/gp-mqtt-client#readme",
   "dependencies": {
     "dotenv": "^10.0.0",
     "log4js": "^6.3.0",
@@ -42,6 +42,7 @@
     "@typescript-eslint/parser": "^4.33.0",
     "eslint": "^7.32.0",
     "eslint-config-google": "^0.14.0",
+    "eslint-config-standard": "^16.0.3",
     "tsc-watch": "^4.5.0",
     "typescript": "^4.5.2"
   }

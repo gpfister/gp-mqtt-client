@@ -2,8 +2,7 @@
 
 ## v0.2.0
 
-- `listen` command has been enhanced to allow to push messages to a PubSub server
-- `simple-mqtt-client --help` displays the version
+- Improve console output
 
 ## v0.1.0 - First release
 

@@ -15,9 +15,8 @@
  * SOFTWARE.
  */
 
-import { QoS } from 'mqtt';
+import { GPApp } from './app';
 
-export type GPTopic = {
-  name: string;
-  qos: QoS
-}
+const app = new GPApp();
+
+app.main();

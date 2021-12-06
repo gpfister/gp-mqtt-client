@@ -1,0 +1,12 @@
+# Sources
+src/
+node_modules/
+
+# Typescript and eslint
+tsconfig.json
+.eslintrc.json
+
+# Archives
+*.tgz
+*.tar.gz
+*.zip
