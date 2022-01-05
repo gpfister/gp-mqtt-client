@@ -1,6 +1,6 @@
 {
   "name": "gp-mqtt-client",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Simple MQTT Client (no auth, decode base64, ...)",
   "main": "dist/gp-mqtt-client.js",
   "bin": {
