@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /**
  * gp-mqtt-client | Simple MQTT Client
  *
@@ -17,4 +15,13 @@
  * SOFTWARE.
  */
 
-require('../dist/gp-mqtt-client.js');
+import { GPGetUnitTest, GPListenUnitTest } from './specs';
+
+class GPTest {
+  static async run() {
+    await GPGetUnitTest.run();
+    await GPListenUnitTest.run();
+  }
+}
+
+GPTest.run().then(() => { });

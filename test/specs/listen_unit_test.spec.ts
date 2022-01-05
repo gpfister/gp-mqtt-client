@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /**
  * gp-mqtt-client | Simple MQTT Client
  *
@@ -15,6 +13,16 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- */
+*/
 
-require('../dist/gp-mqtt-client.js');
+import { describe, it } from 'mocha';
+
+export class GPListenUnitTest {
+  static async run() {
+    describe('Unit test on LISTEN command', async () => {
+      it('Dummy test', async () => {
+
+      });
+    });
+  }
+}

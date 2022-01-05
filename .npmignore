@@ -10,3 +10,9 @@ tsconfig.json
 *.tgz
 *.tar.gz
 *.zip
+
+# Github
+.github/
+
+# Test
+test/

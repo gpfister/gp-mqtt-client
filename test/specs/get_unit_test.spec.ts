@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /**
  * gp-mqtt-client | Simple MQTT Client
  *
@@ -17,4 +15,14 @@
  * SOFTWARE.
  */
 
-require('../dist/gp-mqtt-client.js');
+import { describe, it } from 'mocha';
+
+export class GPGetUnitTest {
+  static async run() {
+    describe('Unit test on GET command', async () => {
+      it('Dummy test', async () => {
+
+      });
+    });
+  }
+}

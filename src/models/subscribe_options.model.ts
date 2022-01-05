@@ -1,10 +1,8 @@
-#!/usr/bin/env node
-
 /**
  * gp-mqtt-client | Simple MQTT Client
  *
  * @author Greg PFISTER
- * @since 0.1.0
+ * @since 0.2.0
  * @license MIT
  * @copyright (C) 2021, Greg PFISTER. MIT License
  *
@@ -17,4 +15,9 @@
  * SOFTWARE.
  */
 
-require('../dist/gp-mqtt-client.js');
+export class GPSubscribeOptions {
+  listen: boolean = false;
+  useBase64Decoding: boolean = false;
+  outputPrettyJson: boolean = false;
+  outputFolder?: string;
+}

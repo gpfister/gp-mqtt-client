@@ -1,5 +1,5 @@
 /**
- * Simple MQTT Client
+ * gp-mqtt-client | Simple MQTT Client
  *
  * @author Greg PFISTER
  * @since 0.1.0

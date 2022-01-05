@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /**
  * gp-mqtt-client | Simple MQTT Client
  *
@@ -17,4 +15,5 @@
  * SOFTWARE.
  */
 
-require('../dist/gp-mqtt-client.js');
+export { GPGetUnitTest } from './get_unit_test.spec';
+export { GPListenUnitTest } from './listen_unit_test.spec';

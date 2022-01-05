@@ -1,5 +1,5 @@
 /**
- * Simple MQTT Client
+ * gp-mqtt-client | Simple MQTT Client
  *
  * @author Greg PFISTER
  * @since 0.1.0
@@ -15,4 +15,6 @@
  * SOFTWARE.
  */
 
-export { GPTopic } from './topic.model';
+export type { GPTopic } from './topic.model';
+export { GPSubscribeOptions } from './subscribe_options.model';
+export { GPPublishOptions } from './publish_options.model';
