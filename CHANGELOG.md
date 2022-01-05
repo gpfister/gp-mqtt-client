@@ -1,6 +1,6 @@
 # Change Log
 
-## v0.2.0
+## v0.2.0 - Jan. 5th, 2022
 
 Breaking changes:
 

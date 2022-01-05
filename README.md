@@ -1,4 +1,6 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![node](https://img.shields.io/badge/node-16.x-233056)](https://nodejs.org)
+[![npm](https://img.shields.io/badge/npm-ready-cb3837)](https://www.npmjs.com/package/gp-mqtt-client)
 
 # gp-mqtt-client
 
@@ -9,11 +11,20 @@ A simple console base MQTT client for development purpose.
 This simple console base MQTT client is for my personal development requirement.
 It allows me to:
 
-- monitor topics
+- subscribe to a topic and listen for messages or just get the last one (if any)
+- publish a message to a topic
+
+It doesn't support authentication.
 
 ## Install
 
-_NB: This is not yet published on npm_
+The easiest way is to install via npm:
+
+```
+sudo npm i -g gp-mqtt-client
+```
+
+Alternatively, you can clone, build and install:
 
 ```
 git clone https://github.com/gpfister/gp-mqtt-client.git
@@ -28,11 +39,12 @@ It uses `yargs` with a command approach:
 
 ```
 $ ./bin/gp-mqtt-client --help
-
-simple-mqtt-client [command]
+gp-mqtt-client [command]
 
 Commands:
-  simple-mqtt-client listen [topic]  Start listening to topic
+  gp-mqtt-client sub [topic] [options]      Subscribe to a topic
+  gp-mqtt-client pub [topic] [message]      Publish a message to a topic
+  [options]
 
 Options:
       --help      Show help                                            [boolean]
@@ -41,15 +53,26 @@ Options:
   -p, --port      The port of the MQTT server           [number] [default: 1883]
   -P, --protocol  The protocol to use to connect to the MQTT server
                                                       [string] [default: "mqtt"]
+  -v, --verbose                                       [boolean] [default: false]
+  -d, --debug                                         [boolean] [default: false]
+
+For more detail, visit https://github.com/gpfister/gp-mqtt-client
+
+This is a free software (MIT License), enjoy !
 ```
 
-### Listen command
+### `sub` command
+
+This command allow to subscribe to a topic. If the `--listen` option is used, it
+will listen to incomming message, reconnecting if needed.
+
+Messages can be decoded using base64 (option `--base64`).
 
 ```
-$ ./dist/simple-mqtt-client listen --help                                                                                                                                                                                 ✔  378  18:15:25
-simple-mqtt-client listen [topic]
+$ ./bin/gp-mqtt-client sub --help
+gp-mqtt-client sub [topic] [options]
 
-Start listening to topic
+Subscribe to a topic
 
 Positionals:
   topic  The topic to subscribe to                                      [string]
@@ -61,7 +84,40 @@ Options:
   -p, --port      The port of the MQTT server           [number] [default: 1883]
   -P, --protocol  The protocol to use to connect to the MQTT server
                                                       [string] [default: "mqtt"]
+  -v, --verbose                                       [boolean] [default: false]
+  -d, --debug                                         [boolean] [default: false]
   -q, --qos       QoS (Quality Of Service) of the topic    [number] [default: 0]
+  -b, --base64    Apply base64 decoding               [boolean] [default: false]
+  -j, --json      Output as pretty json               [boolean] [default: false]
+  -o, --output    Output each message as file to a folder               [string]
+  -l, --listen    Listen for new message              [boolean] [default: false]
+```
+
+### `pub` command
+
+This command allow to publish a message to a topic.
+
+```
+$ ./bin/gp-mqtt-client pub --help
+gp-mqtt-client pub [topic] [message] [options]
+
+Publish a message to a topic
+
+Positionals:
+  topic    The topic to publish to                                      [string]
+  message  The message to publish                                       [string]
+
+Options:
+      --help      Show help                                            [boolean]
+      --version   Show version number                                  [boolean]
+  -h, --hostname  The hostname of the MQTT server[string] [default: "localhost"]
+  -p, --port      The port of the MQTT server           [number] [default: 1883]
+  -P, --protocol  The protocol to use to connect to the MQTT server
+                                                      [string] [default: "mqtt"]
+  -v, --verbose                                       [boolean] [default: false]
+  -d, --debug                                         [boolean] [default: false]
+  -q, --qos       QoS (Quality Of Service) of the topic    [number] [default: 0]
+  -r, --retain    Add retain flag to message          [boolean] [default: false]
 ```
 
 ## Build
@@ -71,10 +127,16 @@ Options:
 This project has been built using
 
 - [Ubuntu 20.04](https://ubuntu.com)
-- [Node.js v14](https://nodejs.org)
+- [Node.js v16](https://nodejs.org)
 - NPM v8
-- Mosquitto MQTT Server v4
-- libmosquitto v1
+- Mosquitto MQTT Server
+- libmosquitto and libmosquitto-dev
+
+To install dependencies on Ubuntu 20.04:
+
+```
+apt install -y mosquitto libmosquitto libmosquitto-dev
+```
 
 ### Build
 
@@ -92,16 +154,38 @@ npm run build
 
 When successfully built, simply run `npm run help` or `./bin/gp-mqtt-client --help`.
 
+### Unit test
+
+To run the test script:
+
+```
+npm test
+```
+
 ## Examples
 
-The following example are used in the context of IoT devices interface to
+The following example is used in the context of IoT devices interface to
 [Google Cloud Platform](https://cloud.google.com) via
 [Cloud IoT Core](https://cloud.google.com/iot-core), emulated via a local
 Mosquitto MQTT Server, and [Firebase](https://firebase.google.com) emulated via
 the provided
-[emulators](https://firebase.google.com/docs/emulator-suite?authuser=0).
+[emulators](https://firebase.google.com/docs/emulator-suite?authuser=0). A
+[Mosquitto](<[https://ec](https://mosquitto.org)>) server (without
+authentication) is used.
 
-- Monitor device config (QoS = 1): `simple-mqtt-client listen "/devices/deviceId/config" -q 1`
+To monitor device config (QoS = 1):
+
+```
+gp-mqtt-client sub "/devices/<DEVICE_ID>/config" -q 1 -l
+```
+
+The following example publishes a message to a topic on a
+[Mosquitto](<[https://ec](https://mosquitto.org)>) server (without
+authentication):
+
+```
+gp-mqtt-client pub "/devices/<DEVICE_ID>/config" "{\"hello\": \"world !\"}" -q 1
+```
 
 ## Contributions
 
