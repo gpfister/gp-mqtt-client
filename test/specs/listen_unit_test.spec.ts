@@ -13,11 +13,16 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- */
+*/
 
-import { QoS } from 'mqtt';
+import { describe, it } from 'mocha';
 
-export type GPTopic = {
-  name: string;
-  qos: QoS
+export class GPListenUnitTest {
+  static async run() {
+    describe('Unit test on LISTEN command', async () => {
+      it('Dummy test', async () => {
+
+      });
+    });
+  }
 }

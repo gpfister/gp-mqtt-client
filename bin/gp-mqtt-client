@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /**
  * gp-mqtt-client | Simple MQTT Client
  *
@@ -15,9 +17,4 @@
  * SOFTWARE.
  */
 
-import { QoS } from 'mqtt';
-
-export type GPTopic = {
-  name: string;
-  qos: QoS
-}
+require('../dist/gp-mqtt-client.js');

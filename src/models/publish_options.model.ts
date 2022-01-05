@@ -2,7 +2,7 @@
  * gp-mqtt-client | Simple MQTT Client
  *
  * @author Greg PFISTER
- * @since 0.1.0
+ * @since 0.2.0
  * @license MIT
  * @copyright (C) 2021, Greg PFISTER. MIT License
  *
@@ -15,9 +15,6 @@
  * SOFTWARE.
  */
 
-import { QoS } from 'mqtt';
-
-export type GPTopic = {
-  name: string;
-  qos: QoS
+export class GPPublishOptions {
+  retain: boolean = false;
 }

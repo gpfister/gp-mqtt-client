@@ -15,9 +15,13 @@
  * SOFTWARE.
  */
 
-import { QoS } from 'mqtt';
+import { GPGetUnitTest, GPListenUnitTest } from './specs';
 
-export type GPTopic = {
-  name: string;
-  qos: QoS
+class GPTest {
+  static async run() {
+    await GPGetUnitTest.run();
+    await GPListenUnitTest.run();
+  }
 }
+
+GPTest.run().then(() => { });

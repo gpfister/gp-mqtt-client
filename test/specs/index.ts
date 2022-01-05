@@ -15,9 +15,5 @@
  * SOFTWARE.
  */
 
-import { QoS } from 'mqtt';
-
-export type GPTopic = {
-  name: string;
-  qos: QoS
-}
+export { GPGetUnitTest } from './get_unit_test.spec';
+export { GPListenUnitTest } from './listen_unit_test.spec';

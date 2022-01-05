@@ -15,9 +15,6 @@
  * SOFTWARE.
  */
 
-import { QoS } from 'mqtt';
-
-export type GPTopic = {
-  name: string;
-  qos: QoS
-}
+export type { GPTopic } from './topic.model';
+export { GPSubscribeOptions } from './subscribe_options.model';
+export { GPPublishOptions } from './publish_options.model';

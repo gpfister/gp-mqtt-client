@@ -1,0 +1,115 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "help menu",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/src/gp-mqtt-client.ts",
+      "args": ["--help"],
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "preLaunchTask": "tsc: build - tsconfig.json"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Sub + help menu",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/src/gp-mqtt-client.ts",
+      "args": ["sub", "--help"],
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "preLaunchTask": "tsc: build - tsconfig.json"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Pub + help menu",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/src/gp-mqtt-client.ts",
+      "args": ["pub", "--help"],
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "preLaunchTask": "tsc: build - tsconfig.json"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Sub and listen",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/src/gp-mqtt-client.ts",
+      "args": ["sub", "\"/devices/OSK_lock-dev-1/config\"", "-q", "1", "-v", "-l"],
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "preLaunchTask": "tsc: build - tsconfig.json"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Sub",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/src/gp-mqtt-client.ts",
+      "args": ["sub", "\"/devices/OSK_lock-dev-1/config\"", "-q", "1", "-v"],
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "preLaunchTask": "tsc: build - tsconfig.json"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Sub + base64 decoding",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/src/gp-mqtt-client.ts",
+      "args": ["sub", "\"/devices/OSK_lock-dev-1/config\"", "-q", "1", "-v", "-b"],
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "preLaunchTask": "tsc: build - tsconfig.json"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Sub + base64 decoding + json",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/src/gp-mqtt-client.ts",
+      "args": ["sub", "\"/devices/OSK_lock-dev-1/config\"", "-q", "1", "-v", "-b", "-j"],
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "preLaunchTask": "tsc: build - tsconfig.json"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Sub + base64 decoding + json + output",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/src/gp-mqtt-client.ts",
+      "args": ["sub", "\"/devices/OSK_lock-dev-1/config\"", "-q", "1", "-v", "-b", "-j", "-o", "${workspaceFolder}/tmp"],
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "preLaunchTask": "tsc: build - tsconfig.json"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Sub + json",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/src/gp-mqtt-client.ts",
+      "args": ["sub", "\"/devices/OSK_lock-dev-1/config\"", "-q", "1", "-v", "-j"],
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "preLaunchTask": "tsc: build - tsconfig.json"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Pub",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/src/gp-mqtt-client.ts",
+      "args": [
+        "pub",
+        "\"/devices/OSK_lock-dev-1/config\"",
+        "{\"timestamp\":\"2021-09-23T15:51:18.779Z\",\"parameters\":{\"configRefreshInterval\":60000,\"logsRefreshInterval\":60000,\"stateRefreshInterval\":60000},\"doorInfo\":{\"buildingId\":\"CSGZVYYLDk87E3txkcUj\",\"doorId\":\"V0ZANFpRLedOpxk2xZHN\",\"name\":\"MAIN DOOR\",\"streetAddress\":{\"city\":\"Lingolsheim\",\"country\":\"France\",\"houseNumber\":\"40\",\"isoCountryCode\":\"FR\",\"latitude\":48.590029,\"longitude\":7.642877,\"postalCode\":\"67380\",\"streetName\":\"Rue des Muguets\"}},\"accesses\":{\"buildingDoorAccesses\":[{\"access\":{\"accessMethods\":[{\"deviceId\":\"bfeb1851-7fbd-40b8-8e8b-f2c6967a66fe\",\"type\":1}],\"accessRights\":[{\"validity\":2}],\"displayName\":\"Brad SMITH\"},\"accessId\":\"mND4LlnwifaHMwdTKNA0zGfpnby1\"}],\"buildingUnitDoorAccesses\":[{\"access\":{\"accessMethods\":[{\"deviceId\":\"2a1f872b-e70c-40a2-851d-e0b039e24556\",\"type\":1}],\"accessRights\":[{\"validity\":2}],\"displayName\":\"Bill SMITH\"},\"accessId\":\"2TOSe8tAlpdLuq7sZwZtCg3v4y62\",\"unitId\":\"BXziNbWH2D4TCPjpDh5i\"}]},\"gateway\":{\"apiServerConfig\":{\"hostname\":\"central-dev-1.local\",\"port\":8888},\"deviceId\":\"OSK_central-dev-1\",\"makerAppName\":\"central-rpi3-oskey-dev\",\"makerDeviceName\":\"central-dev-1\",\"makerDeviceUuid\":\"central-dev-1\",\"makerName\":\"OSkey.dev\"}}",
+        "-q",
+        "1",
+        "-v"
+      ],
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "preLaunchTask": "tsc: build - tsconfig.json"
+    }
+  ]
+}

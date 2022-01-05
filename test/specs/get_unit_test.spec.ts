@@ -15,9 +15,14 @@
  * SOFTWARE.
  */
 
-import { QoS } from 'mqtt';
+import { describe, it } from 'mocha';
 
-export type GPTopic = {
-  name: string;
-  qos: QoS
+export class GPGetUnitTest {
+  static async run() {
+    describe('Unit test on GET command', async () => {
+      it('Dummy test', async () => {
+
+      });
+    });
+  }
 }

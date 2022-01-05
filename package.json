@@ -1,18 +1,22 @@
 {
-  "name": "simple-mqtt-client",
-  "version": "0.1.0",
+  "name": "gp-mqtt-client",
+  "version": "0.2.0",
   "description": "Simple MQTT Client (no auth, decode base64, ...)",
-  "main": "dist/simple-mqtt-client.js",
+  "main": "dist/gp-mqtt-client.js",
+  "bin": {
+    "gp-mqtt-client": "bin/gp-mqtt-client"
+  },
   "scripts": {
     "lint": "npx eslint ./src --ext .js,.jsx,.ts,.tsx --fix",
-    "build": "tsc --sourceMap && cp ./src/simple-mqtt-client ./dist && chmod +x ./dist/simple-mqtt-client",
-    "build:watch": "cp ./src/simple-mqtt-client ./dist && chmod +x ./dist/simple-mqtt-client && tsc-watch --onSuccess \"./dist/simple-mqtt-client\" --sourceMap",
-    "dev": "tsc-watch --onSuccess \"node ./dist/simple-mqtt-client.js\" --sourceMap",
-    "prod": "node ./dist/simple-mqtt-client.js"
+    "build": "tsc --sourceMap",
+    "test": "mocha --require ts-node/register ./test/test.ts --timeout 10000"
+  },
+  "engines": {
+    "node": ">=16.0.0 <17.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/gpfister/simple-mqtt-client.git"
+    "url": "git+ssh://git@github.com/gpfister/gp-mqtt-client.git"
   },
   "keywords": [
     "MQTT",
@@ -24,25 +28,32 @@
   "author": "Greg PFISTER",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gpfister/simple-mqtt-client/issues"
+    "url": "https://github.com/gpfister/gp-mqtt-client/issues"
   },
-  "homepage": "https://github.com/gpfister/simple-mqtt-client#readme",
+  "homepage": "https://github.com/gpfister/gp-mqtt-client#readme",
   "dependencies": {
     "dotenv": "^10.0.0",
     "log4js": "^6.3.0",
     "mqtt": "^4.2.8",
     "uuid": "^8.3.2",
-    "yargs": "^17.0.1"
+    "yargs": "^17.2.1"
   },
   "devDependencies": {
-    "@types/node": "^16.0.0",
-    "@types/uuid": "^8.3.1",
-    "@types/yargs": "^17.0.1",
-    "@typescript-eslint/eslint-plugin": "^4.28.1",
-    "@typescript-eslint/parser": "^4.28.1",
-    "eslint": "^7.30.0",
+    "@types/chai": "^4.3.0",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^16.11.9",
+    "@types/uuid": "^8.3.3",
+    "@types/yargs": "^17.0.7",
+    "@typescript-eslint/eslint-plugin": "^5.9.0",
+    "@typescript-eslint/parser": "^5.9.0",
+    "chai": "^4.3.4",
+    "eslint": "^8.6.0",
     "eslint-config-google": "^0.14.0",
-    "tsc-watch": "^4.4.0",
-    "typescript": "^4.3.5"
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-chai-friendly": "^0.7.2",
+    "mocha": "^9.1.3",
+    "ts-node": "^10.4.0",
+    "tsc-watch": "^4.5.0",
+    "typescript": "^4.5.2"
   }
 }
