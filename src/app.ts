@@ -32,6 +32,7 @@ export class GPApp {
     // const version = require('../package.json').version;
     // eslint-disable-next-line chai-friendly/no-unused-expressions
     yargs(hideBin(process.argv))
+      .wrap(yargs.terminalWidth())
       .command('sub [topic] [options]', 'Subscribe to a topic', (yargs) => {
         return yargs
           .positional('topic', { description: 'The topic to subscribe to', type: 'string' })
@@ -98,6 +99,7 @@ export class GPApp {
       .strict()
       .epilog('For more detail, visit https://github.com/gpfister/gp-mqtt-client\n\nThis is a free software (MIT License), enjoy !')
       .showHelpOnFail(true)
+      .demandCommand(1, 'You need to user a command')
       .argv;
   }
 }
