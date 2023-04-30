@@ -1,3 +1,4 @@
+#!/bin/sh
 #
 # gp-mqtt-client | Simple MQTT Client
 # Copyright (C) 2021-2023, Greg PFISTER. MIT License
@@ -11,37 +12,10 @@
 # SOFTWARE.
 #
 
-# Sources
-bin/
-src/
-node_modules/
+set -e
 
-# Typescript and eslint
-tsconfig.json
-.eslintrc.json
+echo "Linting ./functions"
+(cd functions; npm run lint || exit 1)
 
-# Archives
-*.tgz
-*.tar.gz
-*.zip
-
-# Snap
-snap/
-*.snap
-*.txt
-
-# Github
-.github/
-
-# Test
-test/
-
-# VS Code
-.devcontainer/
-.vscode/
-
-# Prettier
-.prettierrc.json
-
-# Scripts
-scripts/
+echo "Linting ./test"
+(cd test; npm run lint || exit 1)

@@ -11,37 +11,25 @@
 # SOFTWARE.
 #
 
-# Sources
-bin/
-src/
-node_modules/
+version: '3.9'
 
-# Typescript and eslint
-tsconfig.json
-.eslintrc.json
+# Services
+services:
+    gp-mqtt-client:
+        container_name: gp-mqtt-client
+        user: vscode
+        build:
+            dockerfile: Dockerfile
+            context: .
+        volumes:
+            - ..:/workspace
+            - gp-mqtt-client-devenv-home:/home
+        networks:
+            - gp-mqtt-client-devenv-net
 
-# Archives
-*.tgz
-*.tar.gz
-*.zip
-
-# Snap
-snap/
-*.snap
-*.txt
-
-# Github
-.github/
-
-# Test
-test/
-
-# VS Code
-.devcontainer/
-.vscode/
-
-# Prettier
-.prettierrc.json
-
-# Scripts
-scripts/
+volumes:
+    gp-mqtt-client-devenv-home:
+        name: gp-mqtt-client-devenv-home
+networks:
+    gp-mqtt-client-devenv-net:
+        name: gp-mqtt-client-devenv-net

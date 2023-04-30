@@ -1,0 +1,67 @@
+//
+// gp-mqtt-client | Simple MQTT Client
+// Copyright (C) 2021-2023, Greg PFISTER. MIT License
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+//
+
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.231.6/containers/ubuntu
+{
+    "dockerComposeFile": "docker-compose.yaml",
+    "service": "gp-mqtt-client",
+    "workspaceFolder": "/workspace",
+    "containerUser": "vscode",
+
+    // Customizations
+    "customizations": {
+        "vscode": {
+            // Settings
+            "settings": {
+                "remote.localPortHost": "allInterfaces"
+            },
+
+            // Extensions
+            "extensions": [
+                "dbaeumer.vscode-eslint",
+                "donjayamanne.githistory",
+                "eamodio.gitlens",
+                "yzhang.markdown-all-in-one",
+                "hbenl.vscode-mocha-test-adapter",
+                "eg2.vscode-npm-script",
+                "christian-kohler.npm-intellisense",
+                "quicktype.quicktype",
+                "esbenp.prettier-vscode",
+                "ms-vscode.test-adapter-converter",
+                "hbenl.vscode-test-explorer",
+                "Gruntfuggly.todo-tree",
+                "DotJoshJohnson.xml",
+                "redhat.vscode-yaml",
+                "github.vscode-pull-request-github",
+                "esbenp.prettier-vscode"
+            ]
+        }
+    },
+
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    "forwardPorts": [80],
+    "portsAttributes": {
+        "18080": {
+            "label": "NGinx",
+            "onAutoForward": "notify"
+        }
+    },
+
+    // Use 'postCreateCommand' to run commands after the container is created.
+    // "postAttachCommand": "'nvm install v14 && npm i -g npm@latest && nvm install v16 && npm i -g npm@latest && nvm install v18 && npm i -g npm@latest && nvm install v19 && npm i -g npm@latest && nvm use v18'",
+
+    // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+    "remoteUser": "vscode",
+    "updateRemoteUserUID": false
+}

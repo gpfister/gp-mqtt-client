@@ -1,0 +1,57 @@
+#
+# gp-mqtt-client | Simple MQTT Client
+# Copyright (C) 2021-2023, Greg PFISTER. MIT License
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+
+name: gp-mqtt-client
+base: core22
+version: 1.0.0
+summary: A simple MQTT client
+description: |
+    This is a simple MQTT client for pub (publish) and sub (subscribe) to a topic
+    on a given MQTT server.
+    Examples:
+      - Publish: gp-mqtt-client pub my-topic "This is the message"
+      - Subscribe: gp-mqtt-client sub my-topic -h mqttserver.com -p 1234
+source-code: https://github.com/gpfister/gp-mqtt-client.git
+website: https://github.com/gpfister/gp-mqtt-client#readme
+issues: https://github.com/gpfister/gp-mqtt-client/issues
+license: MIT
+grade: stable
+confinement: strict
+architectures:
+    - build-on: amd64
+    - build-on: arm64
+    - build-on: armhf
+adopt-info: source-gp-mqtt-client
+apps:
+    gp-mqtt-client:
+        command: bin/gp-mqtt-client
+        plugs:
+            - network
+parts:
+    source-gp-mqtt-client:
+        plugin: nil
+        build-snaps:
+            - node/18/stable
+        build-packages:
+            - curl
+        override-build: |
+            craftctl default
+            craftctl set version=$(node -p "require('./package.json').version")
+            if [ ${SNAP_ARCH} = 'amd64' ]; then  curl -s "https://nodejs.org/dist/$(node --version)/node-$(node --version)-linux-x64.tar.gz" | tar xzf - -C "${CRAFT_PART_INSTALL}/" --no-same-owner --strip-components=1; fi
+            if [ ${SNAP_ARCH} = 'arm64' ]; then  curl -s "https://nodejs.org/dist/$(node --version)/node-$(node --version)-linux-arm64.tar.gz" | tar xzf - -C "${CRAFT_PART_INSTALL}/" --no-same-owner --strip-components=1; fi
+            if [ ${SNAP_ARCH} = 'armhf' ]; then  curl -s "https://nodejs.org/dist/$(node --version)/node-$(node --version)-linux-armv7l.tar.gz" | tar xzf - -C "${CRAFT_PART_INSTALL}/" --no-same-owner --strip-components=1; fi
+            npm ci
+            npm run lint
+            npm run build
+            npm i -g --prefix "${CRAFT_PART_INSTALL}" $(npm pack . | tail -1)
+        source: .

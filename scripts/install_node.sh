@@ -1,3 +1,4 @@
+#!/bin/sh
 #
 # gp-mqtt-client | Simple MQTT Client
 # Copyright (C) 2021-2023, Greg PFISTER. MIT License
@@ -11,37 +12,27 @@
 # SOFTWARE.
 #
 
-# Sources
-bin/
-src/
-node_modules/
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-# Typescript and eslint
-tsconfig.json
-.eslintrc.json
+nvm use system
 
-# Archives
-*.tgz
-*.tar.gz
-*.zip
+echo "Latest Node.js v14"
+nvm uninstall v14
+nvm install v14 && npm i -g npm@latest
 
-# Snap
-snap/
-*.snap
-*.txt
+echo "Latest Node.js v16"
+nvm uninstall v16
+nvm install v16 && npm i -g npm@latest
 
-# Github
-.github/
+echo "Latest Node.js v18"
+nvm uninstall v18
+nvm install v18 && npm i -g npm@latest
 
-# Test
-test/
+echo "Latest Node.js v19"
+nvm uninstall v19
+nvm install v19 && npm i -g npm@latest
 
-# VS Code
-.devcontainer/
-.vscode/
+nvm use v18
 
-# Prettier
-.prettierrc.json
-
-# Scripts
-scripts/
+# End

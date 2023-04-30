@@ -1,0 +1,42 @@
+#
+# gp-mqtt-client | Simple MQTT Client
+# Copyright (C) 2021-2023, Greg PFISTER. MIT License
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+
+name: Test
+on:
+    workflow_call:
+        inputs:
+            NODE_VERSION:
+                description: Node.js runtime version
+                type: string
+                default: 18.x
+                required: true
+jobs:
+    Test:
+        name: Test using Node.js ${{ inputs.NODE_VERSION }}
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Node.js ${{ inputs.NODE_VERSION }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ inputs.NODE_VERSION }}
+                  cache: 'npm'
+            - name: Download artifacts
+              uses: actions/download-artifact@v3
+              with:
+                  name: build-${{ inputs.NODE_VERSION }}-output
+            - name: Unpack
+              run: tar xvfz build-${{ inputs.NODE_VERSION }}.tar.gz
+            - name: Test
+              run: npm test

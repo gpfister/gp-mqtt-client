@@ -11,37 +11,22 @@
 # SOFTWARE.
 #
 
-# Sources
-bin/
-src/
-node_modules/
+FROM ghcr.io/gp-devenv/gp-node-devenv:22.04-18-1
 
-# Typescript and eslint
-tsconfig.json
-.eslintrc.json
+# Switch to root
+USER root
 
-# Archives
-*.tgz
-*.tar.gz
-*.zip
+# Switch to vscode
+USER vscode
 
-# Snap
-snap/
-*.snap
-*.txt
+# Go to workspace
+WORKDIR /workspace
 
-# Github
-.github/
+# Trust workspace
+RUN git config --global --add safe.directory /workspace
 
-# Test
-test/
+# Expose ports
+EXPOSE 80
 
-# VS Code
-.devcontainer/
-.vscode/
-
-# Prettier
-.prettierrc.json
-
-# Scripts
-scripts/
+# Entrypoint
+ENTRYPOINT [ "sudo", "/entrypoint.sh" ]

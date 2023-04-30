@@ -1,23 +1,36 @@
+//
+// gp-mqtt-client | Simple MQTT Client
+// Copyright (C) 2021-2023, Greg PFISTER. MIT License
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+//
+
 {
-  "root": true,
   "env": {
     "browser": true,
-    "commonjs": true,
-    "es2017": true
+    "es2022": true
   },
-  "extends": ["standard"],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 12
+    "ecmaVersion": "latest",
+    "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "eslint-plugin-chai-friendly"],
+  "plugins": ["@typescript-eslint"],
   "rules": {
+    "indent": ["error", 4, { "SwitchCase": 1 }],
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"],
     "brace-style": "off",
-    "no-unused-expressions": "off",
-    "chai-friendly/no-unused-expressions": "error",
     "max-len": "off",
     "space-before-function-paren": ["error", { "anonymous": "always", "named": "never", "asyncArrow": "always" }],
-    "semi": ["error", "always"],
     "semi-spacing": ["error", { "before": false, "after": true }],
     "semi-style": ["error", "last"]
   }

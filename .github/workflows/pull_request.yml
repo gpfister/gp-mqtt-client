@@ -11,37 +11,16 @@
 # SOFTWARE.
 #
 
-# Sources
-bin/
-src/
-node_modules/
-
-# Typescript and eslint
-tsconfig.json
-.eslintrc.json
-
-# Archives
-*.tgz
-*.tar.gz
-*.zip
-
-# Snap
-snap/
-*.snap
-*.txt
-
-# Github
-.github/
-
-# Test
-test/
-
-# VS Code
-.devcontainer/
-.vscode/
-
-# Prettier
-.prettierrc.json
-
-# Scripts
-scripts/
+name: Pull request
+on:
+    pull_request:
+        branches: [master]
+jobs:
+    build_test:
+        name: Build and test
+        strategy:
+            matrix:
+                NODE_VERSION: [14.x, 16.x, 18.x, 19.x]
+        uses: ./.github/workflows/build_test.yml
+        with:
+            NODE_VERSION: ${{ matrix.NODE_VERSION }}
